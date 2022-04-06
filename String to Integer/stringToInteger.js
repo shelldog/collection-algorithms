@@ -1,7 +1,8 @@
-let s = "        -42";
+let s = "+-32";
 
 
-let al = {
+let n = {
+  '0': 0,
   '1': 1,
   '2': 2,
   '3': 3,
@@ -11,34 +12,36 @@ let al = {
   '7': 7,
   '8': 8,
   '9': 9,
-  '0': 0
-};
+  '-': '-',
+  '+': '+',
+  ' ': '',
+}
 
 /**
  * @param {string} s
  * @return {number}
  */
 var myAtoi = function(s) {
-  let b = 0;
-  let isNeg = false;
+
+  let p = [];
+  let w = '';
+  
+  if (!(s[0] in n)) return 0; 
 
   for (let i = 0; i < s.length; i++) {
-    if (s[i] === ' ') continue; 
-
-    if (s[i] === '-') {
-      isNeg = true;
-      continue;
-    }
-
-    if (!(s[i] in al)) return 0;
-
-    b = al[s[i]] + b * 10;
+    if (s[i] in n) w += s[i];
+    if (!(s[i] in n)) break;
   }
-  
-  if (b < Math.pow(2, -31)) return Math.pow(2, -31);
-  if (b > Math.pow(2, 31) - 1) return Math.pow(2, 31) - 1;
 
-  return isNeg ? b * -1 : b;
+  let b = 0;
+  let neg = false;
+  console.log(w)
+  w = parseInt(w);
+
+  if (w < Math.pow(-2, 31)) return Math.pow(-2, 31);
+  if (w > Math.pow(2, 31) - 1) return Math.pow(2, 31) - 1;
+
+  return w || 0;
 };
 
 console.log(myAtoi(s));
